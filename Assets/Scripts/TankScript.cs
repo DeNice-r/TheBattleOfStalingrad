@@ -10,26 +10,65 @@ public class TankScript : MonoBehaviour
     public TrackScript trackLeft;
     public TrackScript trackRight;
 
+    private Random rnd = new Random();
+
     public KeyCode keyMoveForward;
     public KeyCode keyMoveReverse;
     public KeyCode keyRotateRight;
     public KeyCode keyRotateLeft;
 
+    public HealthBar healthBar;
+    public GameObject deathEffect;
+
     bool moveForward = false;
     bool moveReverse = false;
-    float moveSpeed = 3f;
+    float moveSpeed = 0f;
     float moveSpeedReverse = 0f;
-    float moveAcceleration = 1.5f;
-    float moveDeceleration = 3f;
-    float moveSpeedMax = 20f;
+    float moveAcceleration = 1.2f;
+    float moveDeceleration = 2.8f;
+    float moveSpeedMax = 18f;
 
     bool rotateRight = false;
     bool rotateLeft = false;
     float rotateSpeedRight = 0f;
     float rotateSpeedLeft = 0f;
-    float rotateAcceleration = 4f;
-    float rotateDeceleration = 10f;
-    float rotateSpeedMax = 130f;
+    float rotateAcceleration = 25f;
+    float rotateDeceleration = 50f;
+    float rotateSpeedMax = 100f;
+
+    public float hp = 100f;
+    public float armor = 100f;
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        float dmg;
+        string outp = armor.ToString() + "/" + hp.ToString();
+        string name = collision.gameObject.name;
+        if(name.Contains("Damagable Box"))
+        {   
+            dmg = 5;
+        }
+        else if (name.Contains("Bullet"))
+        {
+            dmg = 10 + Random.value * 40f;
+        }
+        else
+        {
+            dmg = 2;
+        }
+        float deltadmg = dmg - armor;
+        if (deltadmg <= 0)
+            armor -= dmg;
+        else
+        {
+            armor = 0;
+            hp -= deltadmg;
+            healthBar.slider.value = hp;
+        }
+        Debug.Log("Enemy: " + collision.gameObject.name + ". " + outp + " - " + dmg.ToString() + " = " + armor.ToString() + "/" + hp.ToString());
+        healthBar.SetHealth(armor, hp);
+        
+    }
 
 
     /////*******************************************/////
@@ -38,6 +77,9 @@ public class TankScript : MonoBehaviour
 
     void Update()
     {
+        if (hp <= 0)
+            kill();
+
         rotateLeft = (Input.GetKeyDown(keyRotateLeft)) ? true : rotateLeft;
         rotateLeft = (Input.GetKeyUp(keyRotateLeft)) ? false : rotateLeft;
         if (rotateLeft)
@@ -97,5 +139,12 @@ public class TankScript : MonoBehaviour
         trackRight.animator.SetBool("isMoving", false);
     }
 
-}
+    void kill()
+    {
+        var anim = Instantiate(deathEffect, transform.position, Quaternion.identity);
 
+        Destroy(anim, .2f);
+        Destroy(gameObject);
+    }
+
+}
