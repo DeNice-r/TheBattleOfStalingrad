@@ -26,4 +26,10 @@ public class HealthBar : MonoBehaviour
         }
         //this.GetComponent<Image>().color = new Color32(230, 230, 230, 100);
     }
+    public void SetHealth(float hp)
+    {
+        slider.value = hp;
+        img.color = new Color32(255, 0, 0, 255);
+        //this.GetComponent<Image>().color = new Color32(230, 230, 230, 100);
+    }
 }

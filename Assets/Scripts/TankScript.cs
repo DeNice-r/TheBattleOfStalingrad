@@ -2,11 +2,6 @@
 
 public class TankScript : MonoBehaviour
 {
-
-    /////*******************************************/////
-    /////                   VARS                    /////  
-    /////*******************************************/////
-
     public TrackScript trackLeft;
     public TrackScript trackRight;
 
@@ -38,6 +33,10 @@ public class TankScript : MonoBehaviour
 
     public float hp = 100f;
     public float armor = 100f;
+    public float maxarmor = 100f;
+    public float minarmor = 0f;
+    public float maxhp = 1000f;
+    public float minhp = 0f;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -61,23 +60,17 @@ public class TankScript : MonoBehaviour
             armor -= dmg;
         else
         {
-            armor = 0;
+            armor = minarmor;
             hp -= deltadmg;
-            healthBar.slider.value = hp;
         }
         Debug.Log("Enemy: " + collision.gameObject.name + ". " + outp + " - " + dmg.ToString() + " = " + armor.ToString() + "/" + hp.ToString());
         healthBar.SetHealth(armor, hp);
         
     }
 
-
-    /////*******************************************/////
-    /////                 UPDATE                    /////  
-    /////*******************************************/////
-
     void Update()
     {
-        if (hp <= 0)
+        if (hp <= minhp)
             kill();
 
         rotateLeft = (Input.GetKeyDown(keyRotateLeft)) ? true : rotateLeft;
@@ -122,10 +115,6 @@ public class TankScript : MonoBehaviour
         }
 
     }
-
-    /////*******************************************/////
-    /////                METHODS                    /////  
-    /////*******************************************/////
 
     void trackStart()
     {

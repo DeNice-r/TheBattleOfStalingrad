@@ -22,6 +22,7 @@ public class Shoot : MonoBehaviour
     void shoot()
     {
         var bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
+        //bullet.name = "Bullet " + 
         var body = bullet.GetComponent<Rigidbody2D>();
         body.AddForce(firepoint.up * bulletForce, ForceMode2D.Impulse);
     }
