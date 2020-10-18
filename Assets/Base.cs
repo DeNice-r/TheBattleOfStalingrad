@@ -6,22 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class Base : MonoBehaviour
 {
-    public float hp = 1000f;
-    public float maxhp = 1000f;
-    public float minhp = 0f;
-    public float regen = 5f;
-    public int regenrate = 1000;
+    float hp = 1000f;
+    float maxhp = 1000f;
+    float minhp = 0f;
+    float regen = 5f;
+    float regenrate = 1f;
     public HealthBar healthBar;
-    private Timer timer;
     public GameObject deathEffect;
     // Start is called before the first frame update
 
-    private void Start()
+    void Start()
     {
-        TimerCallback tm = new TimerCallback(regeneration);
-        timer = new Timer(tm, new object(), 0, regenrate);
+        InvokeRepeating("regeneration", 1f, regenrate);
         healthBar.slider.maxValue = hp;
     }
+
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -36,12 +36,7 @@ public class Base : MonoBehaviour
             kill();
     }
 
-    private void OnApplicationQuit()
-    {
-        timer.Dispose();
-    }
-
-    void regeneration(object o)
+    void regeneration()
     {
         if (hp + regen < maxhp)
             hp += regen;
@@ -74,7 +69,6 @@ public class Base : MonoBehaviour
     {
         var anim = Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(anim, 1f);
-        timer.Dispose();
         Destroy(gameObject);
     }
 

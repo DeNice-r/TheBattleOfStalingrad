@@ -20,7 +20,7 @@ public class TankScript : MonoBehaviour
     float moveSpeedReverse = 0f;
     float moveAcceleration = 1.2f;
     float moveDeceleration = 2.8f;
-    float moveSpeedMax = 18f;
+    float moveSpeedMax = 25f;
 
     bool rotateRight = false;
     bool rotateLeft = false;
@@ -30,12 +30,12 @@ public class TankScript : MonoBehaviour
     float rotateDeceleration = 50f;
     float rotateSpeedMax = 100f;
 
-    public float hp = 100f;
-    public float armor = 100f;
-    public float maxarmor = 100f;
-    public float minarmor = 0f;
-    public float maxhp = 1000f;
-    public float minhp = 0f;
+    float hp = 100f;
+    float armor = 100f;
+    //float maxarmor = 100f;
+    float minarmor = 0f;
+    //float maxhp = 100f;
+    float minhp = 0f;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -106,9 +106,7 @@ public class TankScript : MonoBehaviour
     void takeDamage(Collision2D collision)
     {
         float dmg;
-        string outp = armor.ToString() + "/" + hp.ToString();
         string name = collision.gameObject.name;
-        Debug.Log(name);
         if (name.Contains("Damage: "))
         {
             dmg = float.Parse(name.Substring(name.IndexOf("Damage: ") + 8));
