@@ -12,6 +12,5 @@ public class bullet : MonoBehaviour
         var effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(effect, .2f);
         Destroy(gameObject);
-        Debug.Log("bullet collided");
     }
 }

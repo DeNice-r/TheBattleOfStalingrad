@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Base : MonoBehaviour
@@ -12,7 +9,8 @@ public class Base : MonoBehaviour
     public float hp = 1000f;
     public float maxhp = 1000f;
     public float minhp = 0f;
-    public float regen = 1f;
+    public float regen = 5f;
+    public int regenrate = 1000;
     public HealthBar healthBar;
     private Timer timer;
     public GameObject deathEffect;
@@ -21,29 +19,13 @@ public class Base : MonoBehaviour
     private void Start()
     {
         TimerCallback tm = new TimerCallback(regeneration);
-        timer = new Timer(tm, new object(), 0, 200);
+        timer = new Timer(tm, new object(), 0, regenrate);
         healthBar.slider.maxValue = hp;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var iname = collision.gameObject.name;
-        float dmg;
-        string name = collision.gameObject.name;
-        if (name.Contains("Damagable Box"))
-        {
-            dmg = 5;
-        }
-        else if (name.Contains("Bullet"))
-        {
-            dmg = 10 + Random.value * 40f;
-        }
-        else
-        {
-            dmg = 2;
-        }
-        hp -= dmg;
-        healthBar.SetHealth(hp);
+        takeDamage(collision);
     }
 
     // Update is called once per frame
@@ -54,13 +36,38 @@ public class Base : MonoBehaviour
             kill();
     }
 
+    private void OnApplicationQuit()
+    {
+        timer.Dispose();
+    }
+
     void regeneration(object o)
     {
-        Debug.Log("regenerated! " + regen.ToString());
         if (hp + regen < maxhp)
             hp += regen;
         else
             hp = maxhp;
+    }
+
+    void takeDamage(Collision2D collision)
+    {
+        float dmg;
+        string name = collision.gameObject.name;
+        if (name.Contains("Damage: "))
+        {
+            dmg = float.Parse(name.Substring(name.IndexOf("Damage: ") + 8));
+        }
+        else if (name.Contains("Damagable Box"))
+        {
+            dmg = 5;
+        }
+        else
+        {
+            dmg = 2;
+        }
+
+        hp -= dmg;
+        healthBar.SetHealth(hp);
     }
 
     void kill()

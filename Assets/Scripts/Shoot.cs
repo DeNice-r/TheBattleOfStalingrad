@@ -22,7 +22,7 @@ public class Shoot : MonoBehaviour
     void shoot()
     {
         var bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
-        //bullet.name = "Bullet " + 
+        bullet.name = gameObject.name + " Bullet. Damage: " + (10 + Random.value * 40f).ToString();
         var body = bullet.GetComponent<Rigidbody2D>();
         body.AddForce(firepoint.up * bulletForce, ForceMode2D.Impulse);
     }

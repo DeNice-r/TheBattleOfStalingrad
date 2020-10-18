@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class TankScript : MonoBehaviour
 {
     public TrackScript trackLeft;
     public TrackScript trackRight;
-
-    private Random rnd = new Random();
 
     public KeyCode keyMoveForward;
     public KeyCode keyMoveReverse;
@@ -40,31 +39,7 @@ public class TankScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        float dmg;
-        string outp = armor.ToString() + "/" + hp.ToString();
-        string name = collision.gameObject.name;
-        if(name.Contains("Damagable Box"))
-        {   
-            dmg = 5;
-        }
-        else if (name.Contains("Bullet"))
-        {
-            dmg = 10 + Random.value * 40f;
-        }
-        else
-        {
-            dmg = 2;
-        }
-        float deltadmg = dmg - armor;
-        if (deltadmg <= 0)
-            armor -= dmg;
-        else
-        {
-            armor = minarmor;
-            hp -= deltadmg;
-        }
-        Debug.Log("Enemy: " + collision.gameObject.name + ". " + outp + " - " + dmg.ToString() + " = " + armor.ToString() + "/" + hp.ToString());
-        healthBar.SetHealth(armor, hp);
+        takeDamage(collision);
         
     }
 
@@ -126,6 +101,35 @@ public class TankScript : MonoBehaviour
     {
         trackLeft.animator.SetBool("isMoving", false);
         trackRight.animator.SetBool("isMoving", false);
+    }
+
+    void takeDamage(Collision2D collision)
+    {
+        float dmg;
+        string outp = armor.ToString() + "/" + hp.ToString();
+        string name = collision.gameObject.name;
+        Debug.Log(name);
+        if (name.Contains("Damage: "))
+        {
+            dmg = float.Parse(name.Substring(name.IndexOf("Damage: ") + 8));
+        }
+        else if (name.Contains("Damagable Box"))
+        {
+            dmg = 5;
+        }
+        else
+        {
+            dmg = 2;
+        }
+        float deltadmg = dmg - armor;
+        if (deltadmg <= 0)
+            armor -= dmg;
+        else
+        {
+            armor = minarmor;
+            hp -= deltadmg;
+        }
+        healthBar.SetHealth(armor, hp);
     }
 
     void kill()
