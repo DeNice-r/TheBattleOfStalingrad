@@ -27,9 +27,9 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         InvokeRepeating("shoot", .5f, .7f);
-        hp += (ScoreMgr.Ascore + ScoreMgr.Bscore)/25;
-        minDamage += ((float)ScoreMgr.Ascore + (float)ScoreMgr.Bscore) / 200;
-        maxDamage += (ScoreMgr.Ascore + ScoreMgr.Bscore) / 100;
+        hp += ScoreMgr.scoreSum()/25;
+        minDamage += ((float)ScoreMgr.scoreSum()) / 200;
+        maxDamage += (ScoreMgr.scoreSum()) / 100;
         rndDamage = maxDamage - minDamage;
         //Debug.Log(minDamage.ToString() + " " + maxDamage.ToString() + " " + rndDamage + " " + hp);
     }

@@ -9,13 +9,14 @@ using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
+    public float period;
     public GameObject[] spawnpoints;
     public GameObject enemy;
     public Transform target;
 
     void Start()
     {
-        InvokeRepeating("EnemySpawner", 0f, 5f);
+        InvokeRepeating("EnemySpawner", 0f, period);
         var ds = enemy.GetComponent<AIDestinationSetter>();
         ds.target = target;
     }

@@ -13,6 +13,7 @@ public class Base : MonoBehaviour
     float regenrate = 1f;
     public HealthBar healthBar;
     public GameObject deathEffect;
+    public PostGameMenus postGameMenus;
     // Start is called before the first frame update
 
     void Start()
@@ -70,6 +71,7 @@ public class Base : MonoBehaviour
         var anim = Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(anim, 1f);
         Destroy(gameObject);
+        postGameMenus.isBaseDead = true;
     }
 
 

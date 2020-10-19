@@ -40,7 +40,6 @@ public class TankScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         takeDamage(collision);
-        
     }
 
     void Update()
