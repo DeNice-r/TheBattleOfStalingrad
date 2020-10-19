@@ -36,6 +36,9 @@ public class Damagable_Box : MonoBehaviour
     void Update()
     {
         if (hp < 0)
+        {
             Destroy(gameObject);
+            AstarPath.active.Scan();
+        }
     }
 }

@@ -113,20 +113,21 @@ public class TankScript : MonoBehaviour
         }
         else if (name.Contains("Damagable Box"))
         {
-            dmg = 5;
+            dmg = 0;
         }
         else
         {
-            dmg = 2;
+            dmg = 0;
         }
-        float deltadmg = dmg - armor;
+        float deltadmg = dmg/2 - armor;
         if (deltadmg <= 0)
-            armor -= dmg;
+            armor -= dmg/2;
         else
         {
             armor = minarmor;
-            hp -= deltadmg;
+            hp -= deltadmg*2;
         }
+        //Debug.Log("Came " + dmg + " New " + hp + " " + armor);
         healthBar.SetHealth(armor, hp);
     }
 
