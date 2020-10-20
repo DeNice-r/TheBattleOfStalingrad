@@ -21,7 +21,7 @@ public class ScoreMgr : MonoBehaviour
         Ascore = 0;
         Bscore = 0;
         load();
-        secondPlayer.SetActive(twoPlayers);
+        secondPlayer.SetActive(PlayerPrefs.GetInt("two players") == 1);
     }
 
     private void Update()

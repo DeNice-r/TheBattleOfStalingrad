@@ -57,6 +57,7 @@ public class PostGameMenus : MonoBehaviour
 
     public void ToMainMenu()
     {
+        Resume();
         SceneManager.LoadScene(0);
     }
 
