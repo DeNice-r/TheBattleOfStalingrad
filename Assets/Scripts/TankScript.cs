@@ -31,9 +31,7 @@ public class TankScript : MonoBehaviour
 
     float hp = 100f;
     float armor = 100f;
-    //float maxarmor = 100f;
     float minarmor = 0f;
-    //float maxhp = 100f;
     float minhp = 0f;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -125,7 +123,6 @@ public class TankScript : MonoBehaviour
             armor = minarmor;
             hp -= deltadmg*2;
         }
-        //Debug.Log("Came " + dmg + " New " + hp + " " + armor);
         healthBar.SetHealth(armor, hp);
     }
 

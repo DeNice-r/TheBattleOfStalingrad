@@ -16,7 +16,6 @@ public class MainMenu : MonoBehaviour
 
     public Text[] scores;
 
-    // Start is called before the first frame update
     void Start()
     {
         ScoreMgr.load();

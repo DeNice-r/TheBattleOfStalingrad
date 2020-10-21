@@ -64,7 +64,6 @@ public class AudioMgr : MonoBehaviour
     {
         PlayerPrefs.SetFloat("volume", volume);
         var mute = PlayerPrefs.GetInt("mute");
-        //StopCoroutine("PlayBGMusic");
         mainMenuMusic.src.volume = (mute == 1) ? 0f : volume;
         foreach (var m in music)
             m.src.volume = (mute == 1) ? 0f : volume;
