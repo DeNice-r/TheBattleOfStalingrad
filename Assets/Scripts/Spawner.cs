@@ -17,11 +17,6 @@ public class Spawner : MonoBehaviour
         ds.target = target;
     }
 
-    void Update()
-    {
-        
-    }
-
     void EnemySpawner()
     {
         var sp = spawnpoints[(int)Math.Round(Random.value* (spawnpoints.Length-1))];
